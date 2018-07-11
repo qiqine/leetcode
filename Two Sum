@@ -12,7 +12,7 @@ return [0, 1].
 
 
 
-解：
+解1：暴力法
 /**
  * @param {number[]} nums
  * @param {number} target
@@ -27,3 +27,33 @@ var twoSum = function(nums, target) {
         }
     }
 };
+
+时间复杂度o(n^2)
+空间复杂度o(1)
+
+解2：hash-table
+var twoSum = function(nums, target) {
+    var map={} 
+    nums.forEach((v,k)=>{
+        map[v]=k
+    })
+    //forEach 不能停止
+    for (let i=0;i<nums.length;i++){
+        let s=target-nums[i]
+        if(map[s]!==undefined&&map[s]!=i){
+            return [map[s],i]
+        }
+    }
+};
+
+解3：少一层循环
+var twoSum = function(nums, target) {
+    var map = {}
+    for ( let i=0;i<nums.length;i++){
+        let s =target -nums[i]
+        if(map[s]!==undefined){
+            return [map[s],i]
+        }
+         map[nums[i]]=i
+    }
+}
