@@ -27,8 +27,11 @@ var threeSum = function(nums) {
     let result=[];
     let l=nums.length
     //这边有个坑就是sort排序，-2会小于-4
-    nums.sort(function(){
-        return a-b>0
+    //nums.sort(function(){
+      //  return a-b>0
+    //})
+    nums.sort(function(a,b){
+          return a-b
     })
     
     for(let i=0;i<l-2;i++){
