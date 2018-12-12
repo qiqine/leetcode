@@ -1,0 +1,60 @@
+题目：
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+Return:
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+
+解：
+需要用深度优先搜索DFS，只不过数据结构相对复杂一点，需要用到二维的vector，
+而且每当DFS搜索到新节点时，都要保存该节点。而且每当找出一条路径之后，
+都将这个保存为一维vector的路径保存到最终结果二位vector中。
+并且，每当DFS搜索到子节点，发现不是路径和时，返回上一个结点时，需要把该节点从一维vector中移除。
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @param {number} sum
+ * @return {number[][]}
+ */
+
+var pathSum = function(root, sum) {
+    let result=[]
+    let out=[]
+    function dfs(root,sum,res,out){
+        if(root==null) return 
+        out.push(root.val)
+        if(root.val==sum&&root.left==null&&root.right==null){
+            res.push(out)
+        }else{
+          //这边有个坑，导致输出的result一直是[]，因为out是数组类型，所以在out.pop的时候会导致result里面的out也没有数据了。
+            root.left&&dfs(root.left,sum-root.val,res,Object.assign([], out))
+            root.right&&dfs(root.right,sum-root.val,res,Object.assign([], out))
+        }
+        //out.pop()
+    }
+    dfs(root,sum,result,out)
+    return result
+};
