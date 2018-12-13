@@ -1,0 +1,48 @@
+
+题目：
+Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+
+Example 1:
+
+Input: num1 = "2", num2 = "3"
+Output: "6"
+Example 2:
+
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+Note:
+
+The length of both num1 and num2 is < 110.
+Both num1 and num2 contain only digits 0-9.
+Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+You must not use any built-in BigInteger library or convert the inputs to integer directly.
+解：
+/**
+ * @param {string} num1
+ * @param {string} num2
+ * @return {string}
+ */
+var multiply = function(num1, num2) {
+     let n1=num1.length,n2=num2.length,k=n1+n2-2
+    let temRes=[],str='',pre=0
+    for(let i=0;i<n1+n2;i++){
+        temRes[i]=0
+    }
+    for(let i=0;i<n1;i++){
+        for(let j=0;j<n2;j++){
+            temRes[k-i-j]+=num1[i]*num2[j]
+        }
+    }
+    for(let i=0;i<n1+n2;i++){
+        temRes[i]+=pre
+        pre=parseInt(temRes[i]/10)
+        temRes[i]=temRes[i]%10
+    }
+    let i=n1+n2-1
+    while(temRes[i]==0){i--}
+    if(i<0)return '0'
+    for(;i>=0;i--){
+        str+=temRes[i]
+    }
+    return str
+};
